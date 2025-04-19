@@ -14,10 +14,11 @@ contract PiggyswapCore {
         bytes description;              // short token description
     }
     struct TokenState {
-        address pool;       // liquidity pool address
-        uint256 balance;    // current pool balance
-        uint256 price;      // current token price in USD
-        TokenStatus status; // ie: ACTIVE, PAUSED, SUSPENDED, etc
+        address pool;           // liquidity pool address
+        uint256 totalBalance;   // current pool total balance
+        uint256 availBalance;   // current pool balance available for swaps
+        uint256 price;          // current token price in USD
+        TokenStatus status;     // ie: ACTIVE, PAUSED, SUSPENDED, etc
     }
     enum TokenStatus {
         ACTIVE,
@@ -61,6 +62,9 @@ contract PiggyswapCore {
     // wallets
     mapping(address walletAddr => bool transactedBefore) private walletPool;
     mapping(address walletAddr => TxRecord txHistory) private walletTxHistory;
+
+    // transactions
+    mapping(address tokenAddr => uint256 txAmountLimit) private tokenTxAmountLimit;
 
     // functions ////////////////////////////////////////////////////////
     function isTokenSupported(address tokenAddr) public view returns (bool) {

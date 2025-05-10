@@ -67,6 +67,8 @@ contract PiggyswapCore {
     mapping(address tokenAddr => uint256 txAmountLimit) private tokenTxAmountLimit;
 
     // functions ////////////////////////////////////////////////////////
+    constructor() {
+    }
     function isTokenSupported(address tokenAddr) public view returns (bool) {
         return supportedTokens[tokenAddr];
     }
@@ -81,7 +83,7 @@ contract PiggyswapCore {
     function proposeSwap(AppTransaction memory swapTx) public returns (bool) {
         // check transaction validity
         // 1. wallet is valid
-        // 2. offered token and requested token must be supported
+        // 2. offered token and requested token are supported
         // 3. amount offered and amount requested > zero
         // 4. amount offered and amount requested <= swap limits
         // 5. amount offered <= wallet balance of offered token
@@ -90,7 +92,7 @@ contract PiggyswapCore {
         // if transaction is valid, set status to PROPOSED
         // call performSwap()
 
-        // if transaction is invalid, set status to SUSPENDED
+        // if transaction is invalid, set status to REJECTED
         // return false
     }
     function performSwap(AppTransaction memory swapTx) internal returns (bool) {
